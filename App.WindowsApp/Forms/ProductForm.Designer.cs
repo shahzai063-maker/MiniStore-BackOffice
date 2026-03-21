@@ -79,7 +79,7 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
             tableLayoutPanel1.Size = new Size(640, 267);
-            tableLayoutPanel1.TabIndex = 0;
+            tableLayoutPanel1.TabIndex = 1;
             tableLayoutPanel1.Paint += tableLayoutPanel1_Paint;
             // 
             // lblName
@@ -89,7 +89,7 @@
             lblName.Margin = new Padding(2, 0, 2, 0);
             lblName.Name = "lblName";
             lblName.Size = new Size(49, 20);
-            lblName.TabIndex = 0;
+            lblName.TabIndex = 6;
             lblName.Text = "Name";
             // 
             // cmbCat
@@ -99,7 +99,7 @@
             cmbCat.Margin = new Padding(2, 0, 2, 0);
             cmbCat.Name = "cmbCat";
             cmbCat.Size = new Size(69, 20);
-            cmbCat.TabIndex = 1;
+            cmbCat.TabIndex = 7;
             cmbCat.Text = "Category";
             // 
             // nuPrice
@@ -109,7 +109,7 @@
             nuPrice.Margin = new Padding(2, 0, 2, 0);
             nuPrice.Name = "nuPrice";
             nuPrice.Size = new Size(41, 20);
-            nuPrice.TabIndex = 2;
+            nuPrice.TabIndex = 8;
             nuPrice.Text = "Price";
             // 
             // nuStock
@@ -119,7 +119,7 @@
             nuStock.Margin = new Padding(2, 0, 2, 0);
             nuStock.Name = "nuStock";
             nuStock.Size = new Size(45, 20);
-            nuStock.TabIndex = 3;
+            nuStock.TabIndex = 9;
             nuStock.Text = "Stock";
             // 
             // lblStatus
@@ -129,7 +129,7 @@
             lblStatus.Margin = new Padding(2, 0, 2, 0);
             lblStatus.Name = "lblStatus";
             lblStatus.Size = new Size(49, 20);
-            lblStatus.TabIndex = 4;
+            lblStatus.TabIndex = 10;
             lblStatus.Text = "Status";
             // 
             // textid
@@ -139,7 +139,7 @@
             textid.Margin = new Padding(2, 0, 2, 0);
             textid.Name = "textid";
             textid.Size = new Size(24, 20);
-            textid.TabIndex = 5;
+            textid.TabIndex = 11;
             textid.Text = "ID";
             // 
             // txtName
@@ -149,7 +149,7 @@
             txtName.Margin = new Padding(2);
             txtName.Name = "txtName";
             txtName.Size = new Size(476, 27);
-            txtName.TabIndex = 6;
+            txtName.TabIndex = 0;
             // 
             // cmbCategory
             // 
@@ -159,7 +159,7 @@
             cmbCategory.Margin = new Padding(2);
             cmbCategory.Name = "cmbCategory";
             cmbCategory.Size = new Size(476, 28);
-            cmbCategory.TabIndex = 7;
+            cmbCategory.TabIndex = 1;
             // 
             // numPrice
             // 
@@ -168,7 +168,7 @@
             numPrice.Margin = new Padding(2);
             numPrice.Name = "numPrice";
             numPrice.Size = new Size(476, 27);
-            numPrice.TabIndex = 8;
+            numPrice.TabIndex = 2;
             // 
             // numStock
             // 
@@ -177,7 +177,7 @@
             numStock.Margin = new Padding(2);
             numStock.Name = "numStock";
             numStock.Size = new Size(476, 27);
-            numStock.TabIndex = 9;
+            numStock.TabIndex = 3;
             // 
             // cmbStatus
             // 
@@ -187,7 +187,7 @@
             cmbStatus.Margin = new Padding(2);
             cmbStatus.Name = "cmbStatus";
             cmbStatus.Size = new Size(476, 28);
-            cmbStatus.TabIndex = 10;
+            cmbStatus.TabIndex = 4;
             // 
             // txtID
             // 
@@ -197,7 +197,7 @@
             txtID.Name = "txtID";
             txtID.ReadOnly = true;
             txtID.Size = new Size(476, 27);
-            txtID.TabIndex = 11;
+            txtID.TabIndex = 5;
             // 
             // flpBottom
             // 
