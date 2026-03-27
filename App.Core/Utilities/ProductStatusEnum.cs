@@ -11,6 +11,7 @@ namespace App.Core.Utilities
          Active,
          Inactive,
          Low,
-         Out
+         Out,
+        cmbProductStatus
     }
 }

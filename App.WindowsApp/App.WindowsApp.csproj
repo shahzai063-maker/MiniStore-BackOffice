@@ -23,9 +23,7 @@
     <Compile Update="Views\DashboardView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="Views\ProductViews.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Update="Views\ProductViews.cs" />
   </ItemGroup>
 
   <ItemGroup>

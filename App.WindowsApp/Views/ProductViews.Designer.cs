@@ -210,6 +210,7 @@
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(100, 27);
             textBox1.TabIndex = 3;
+            textBox1.TextChanged += textBox1_TextChanged;
             // 
             // cmbCategory
             // 
@@ -219,6 +220,7 @@
             cmbCategory.Name = "cmbCategory";
             cmbCategory.Size = new Size(121, 28);
             cmbCategory.TabIndex = 4;
+            cmbCategory.SelectedIndexChanged += cmbCategory_SelectedIndexChanged;
             // 
             // cmbStockStatus
             // 
@@ -228,6 +230,7 @@
             cmbStockStatus.Name = "cmbStockStatus";
             cmbStockStatus.Size = new Size(121, 28);
             cmbStockStatus.TabIndex = 5;
+            cmbStockStatus.SelectedIndexChanged += cmbStockStatus_SelectedIndexChanged;
             // 
             // label
             // 
@@ -342,6 +345,16 @@
             ((System.ComponentModel.ISupportInitialize)DGVproducts).EndInit();
             ResumeLayout(false);
 
+        }
+
+        private void tsbview_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void tsbedit_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

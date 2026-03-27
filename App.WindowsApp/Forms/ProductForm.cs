@@ -1,4 +1,5 @@
-﻿using App.Core.Models;
+﻿using App.Core.Contracts;
+using App.Core.Models;
 using App.Core.Utilities;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,13 @@ namespace App.WindowsApp.Forms
 {
     public partial class ProductForm : Form
     {
-        public ProductForm(ProductFormModeEnum mode, Product? p)
+        ProductFormModeEnum _mode;
+        Product _product;
+        private IProductService _service;
+        IProductService service;
+        private object cmbProductStatus;
+
+        public ProductForm(ProductFormModeEnum mode, Product? p, IProductService service)
         {
 
             InitializeComponent();
@@ -30,14 +37,19 @@ namespace App.WindowsApp.Forms
             cmbStatus.SelectedIndex = 0;
 
 
+            _mode = mode;
+            _product = p;
+            _service = service;
 
 
 
-            if (mode == ProductFormModeEnum.Edit) 
+
+
+            if (mode == ProductFormModeEnum.Edit)
             {
                 btnSave.Text = "Update";
             }
-            else if(mode == ProductFormModeEnum.View)
+            else if (mode == ProductFormModeEnum.View)
             {
                 btnSave.Visible = false;
 
@@ -51,22 +63,22 @@ namespace App.WindowsApp.Forms
                 cmbStatus.SelectedItem = p.Status;
                 numPrice.Value = p.price;
                 numStock.Value = p.Stock;
-        
+
 
             }
-         
 
 
 
 
 
-           
+
+
             {
-             
-                
+
+
 
             }
-          
+
         }
 
         private void flpBottom_Paint(object sender, PaintEventArgs e)
@@ -76,6 +88,44 @@ namespace App.WindowsApp.Forms
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
+
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            if (_mode == ProductFormModeEnum.Add)
+            {
+                Product newProduct = new Product();
+                newProduct.Name = txtName.Text;
+                newProduct.Category = (ProductCategoryEnum)cmbCategory.SelectedItem;
+                newProduct.Status = (ProductStatusEnum)cmbStatus.SelectedItem;
+                newProduct.price = numPrice.Value;
+                newProduct.Stock = (int)numStock.Value;
+
+
+                //_product = _service.Add(newProduct);
+                //txtID.Text = _product.Id; 
+
+                Product temp = _service.Add(newProduct);
+                txtID.Text = temp?.Id ?? "";
+            }
+            else if (_mode == ProductFormModeEnum.Edit)
+            {
+                _product.Name = txtName.Text;
+                _product.Category = (ProductCategoryEnum)cmbCategory.SelectedItem;
+                _product.Status = (ProductStatusEnum)cmbStatus.SelectedItem;
+                _product.price = numPrice.Value;
+                _product.Stock = (int)numStock.Value;
+
+                bool isUpdated = _service.Update(_product);
+            }
+            this.Close();
+
+        }
+
+        private void ProductForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.Close();
 
         }
     }

@@ -16,6 +16,6 @@ namespace App.Core.Contracts
         public Product GetById(String id);
         public List<Product> GetAll();
         public List<Product> Search(string text, ProductCategoryEnum? category, ProductStatusEnum? status);
-
-             }
+        void Search(string searchText, ProductCategoryEnum? category, object status);
+    }
 }

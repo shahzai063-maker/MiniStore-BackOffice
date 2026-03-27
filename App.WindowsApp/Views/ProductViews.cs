@@ -1,4 +1,7 @@
 ﻿using App.Core.Contracts;
+using App.Core.Models;
+using App.Core.Utilities;
+using App.WindowsApp.Forms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,10 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
-using App.Core.Utilities;
-using App.WindowsApp.Forms;
-using App.Core.Models;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace App.WindowsApp.Views
 {
@@ -21,7 +21,7 @@ namespace App.WindowsApp.Views
 
         IProductService _service;
         BindingSource _dgvBindingSource = new BindingSource();
-
+        private object selectedCategory;
 
         public ProductViews(IProductService _ser)
         {
@@ -33,54 +33,109 @@ namespace App.WindowsApp.Views
         private void ProductViews_Load(object sender, EventArgs e)
         {
             cmbCategory.Items.Clear();
-            cmbCategory.Items.Add("--All--");
-            cmbCategory.Items.AddRange(Enum.GetNames(typeof(ProductCategoryEnum)));
+            var categories = new List<object> { "--ALL--" };
+            categories.AddRange(Enum.GetValues(typeof(ProductCategoryEnum)).Cast<object>());
+            cmbCategory.DataSource = categories;
             cmbCategory.SelectedIndex = 0;
 
             cmbStockStatus.Items.Clear();
-            cmbStockStatus.Items.Add("--All--");
-            cmbStockStatus.Items.AddRange(Enum.GetNames(typeof(ProductCategoryEnum)));
+            var statuses = new List<object> { "--All--" };
+            statuses.AddRange(Enum.GetValues(typeof(ProductStatusEnum)).Cast<object>());
+            cmbStockStatus.DataSource = statuses;
             cmbStockStatus.SelectedIndex = 0;
 
 
             if (_service == null)
                 return;
 
-            _service.GetAll();
+            //_service.GetAll();
             _dgvBindingSource.DataSource = _service.GetAll();
-
-
-
-
 
         }
 
-        private void tsbedit_Click(object sender, EventArgs e)
+
+        private void tsbEdit_Click(object sender, EventArgs e)
         {
-            Product? SelectedProduct = _dgvBindingSource.Current as Product;
-            if (SelectedProduct != null)
+            Product? selectedProduct = _dgvBindingSource.Current as Product;
+            if (selectedProduct != null)
             {
-                ProductForm prodForm = new ProductForm(ProductFormModeEnum.Edit, SelectedProduct);
+                ProductForm prodForm = new ProductForm(ProductFormModeEnum.Edit, selectedProduct, _service);
                 prodForm.ShowDialog();
+                RefreshGrid();
+
+
             }
 
         }
 
         private void tsbAdd_Click(object sender, EventArgs e)
         {
-            ProductForm prodForm = new ProductForm(ProductFormModeEnum.Add, null);
+            ProductForm prodForm = new ProductForm(ProductFormModeEnum.Add, null, _service);
             prodForm.ShowDialog();
+            RefreshGrid();
+
 
         }
 
-        private void tsbview_Click(object sender, EventArgs e)
+        private void tsbView_Click(object sender, EventArgs e)
         {
-            Product? SelectedProduct = _dgvBindingSource.Current as Product;
-            if (SelectedProduct != null)
+            Product? selectedProduct = _dgvBindingSource.Current as Product;
+            if (selectedProduct != null)
             {
-                ProductForm prodForm = new ProductForm(ProductFormModeEnum.View, SelectedProduct);
+                ProductForm prodForm = new ProductForm(ProductFormModeEnum.View, selectedProduct, _service);
                 prodForm.ShowDialog();
             }
+        }
+        private void RefreshGrid()
+        {
+            
+            string searchText = textBox1.Text;
+
+
+            ProductCategoryEnum? selectcategory = null;
+            if(cmbCategory.SelectedItem != null) 
+            {
+                if (cmbCategory.SelectedItem.ToString().Equals("--ALL--"))
+                {
+                    selectedCategory = null;
+                }
+                else 
+                {
+                    selectcategory = (ProductCategoryEnum)cmbCategory.SelectedItem;
+                }
+            }
+            ProductStatusEnum? selectedStatus = null;
+            if (cmbStockStatus.SelectedItem != null)
+            {
+                if (cmbStockStatus.SelectedItem.ToString().Equals("--ALL--"))
+                {
+                    selectedStatus = null;
+                }
+                else
+                {
+                    selectedStatus = (ProductStatusEnum)cmbStockStatus.SelectedItem;
+                }
+            }
+
+            _dgvBindingSource.DataSource = _service.Search(searchText, (ProductCategoryEnum?)selectedCategory, selectedStatus);
+
+        }
+
+
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            RefreshGrid();
+        }
+
+        private void cmbCategory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RefreshGrid();
+        }
+
+        private void cmbStockStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RefreshGrid();
 
         }
     }

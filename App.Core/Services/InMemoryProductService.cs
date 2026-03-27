@@ -20,12 +20,19 @@ namespace App.Core.Services
         }
         public Product Add(Product product)
         {
-            throw new NotImplementedException();
+            if (product != null)
+            {
+                product.Id = GenerateId();
+                _products.Add(product);
+            }
+            return product;
         }
 
         public bool Delete(string id)
         {
-            throw new NotImplementedException();
+            Product prodToBeDeleted = GetById(id);
+            _products.Remove(prodToBeDeleted);
+            return true;
         }
 
          public List<Product> GetAll()
@@ -35,17 +42,40 @@ namespace App.Core.Services
 
         public Product GetById(string id)
         {
-            throw new NotImplementedException();
+            Product? prod = _products.Find(p => p.Id == id);
+            return prod;
         }
 
         public List<Product> Search(string text, ProductCategoryEnum? category, ProductStatusEnum? status)
         {
-            throw new NotImplementedException();
+            List<Product> _filtered = _products.ToList();
+            _filtered = _filtered.Where(p => p.Name.Contains(text)).ToList();
+
+            if (category is not null) 
+            {
+                _filtered = _filtered.Where(p => p.Category == category).ToList();
+            }
+            return _filtered;
         }
 
-        public bool Update(Product Product)
+        public bool Update(Product product)
         {
-            throw new NotImplementedException();
+            if (product != null)
+            {
+                Product? existing = _products.Find(p => p.Id == product.Id);
+                if (existing == null) return false;
+
+                existing.Name = product.Name;
+                existing.Category = product.Category;
+                existing.price = product.price;
+                existing.Status = product.Status;
+                existing.Stock = product.Stock;
+
+                return true;
+
+
+            }
+            return false;
         }
         public void GeneratefakeProdcts()
         {
@@ -72,6 +102,11 @@ namespace App.Core.Services
         {
             // e.g., P-1A2B3C
             return "P-" + Guid.NewGuid().ToString("N").Substring(0, 6);
+        }
+
+        public void Search(string searchText, ProductCategoryEnum? category, object status)
+        {
+            throw new NotImplementedException();
         }
     }
 }
